@@ -1,5 +1,3 @@
-package no.teinum.flekkerol;
-
 import javax.servlet.http.HttpServlet;
 
 import org.eclipse.jetty.server.Server;
