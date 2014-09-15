@@ -1,0 +1,96 @@
+<div>
+
+	<!-- Nav tabs -->
+	<ul class="nav nav-tabs" role="tablist">
+		<li class="active"><a href="#info" role="tab" data-toggle="tab">Information</a></li>
+		<li><a href="#mashing" role="tab" data-toggle="tab">Mashing</a></li>
+		<li><a href="#boiling" role="tab" data-toggle="tab">Boiling</a></li>
+		<li><a href="#fermentation" role="tab" data-toggle="tab">Fermentation</a></li>
+	</ul>
+
+	<!-- Tab panes -->
+	<div class="tab-content" style="padding-top: 10px;">
+		<div class="tab-pane active" id="info">
+			<div class="form-group">
+				<label for="brewId">Id</label> <input type="text"
+					class="form-control" id="brewId" placeholder="Enter id"
+					data-bind="value: brewId">
+			</div>
+			<div class="form-group">
+				<label for="name">Name</label> <input type="text"
+					class="form-control" id="name" placeholder="Enter name"
+					data-bind="value: name">
+			</div>
+			<div class="form-group">
+				<label for="recipeUrl">Source</label> <input type="text"
+					class="form-control" id="recipeUrl" placeholder="Enter url"
+					data-bind="value: url">
+			</div>
+			<a data-bind="attr: { href: url }, visible: url">View recipe</a>
+		</div>
+		<div class="tab-pane" id="mashing">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Duration</th>
+							<th>Celsius</th>
+						</tr>
+					</thead>
+					<tbody data-bind="foreach: mashing">
+						<tr
+							data-bind="click: $parent.selectMashing, css: { active: $data == $parent.selectedMashing() }">
+							<td><span data-bind="text: duration"></span> min</td>
+							<td><span data-bind="text: temperature"></span> &#176;</td>
+						</tr>
+					</tbody>
+					<tfoot data-bind="with: selectedMashing">
+						<tr>
+							<th><input type="text" class="form-control"
+								data-bind="value: duration"></th>
+							<th><input type="text" class="form-control"
+								data-bind="value: temperature"></th>
+						</tr>
+					</tfoot>
+				</table>
+		</div>
+		<div class="tab-pane" id="boiling">
+					<p>
+						Duration <span data-bind="text: boilDuration"></span> min
+					</p>
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Hops</h3>
+				</div>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Time</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody data-bind="foreach: hops">
+						<tr>
+							<td data-bind="text: time"></td>
+							<td data-bind="text: description"></td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td></td>
+							<td></td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+		<div class="tab-pane" id="fermentation">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Fermentation</h3>
+				</div>
+				<div class="panel-body"></div>
+			</div>
+		</div>
+	</div>
+</div>

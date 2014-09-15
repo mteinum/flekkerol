@@ -1,0 +1,29 @@
+<div>
+<h1>Recipes</h1>
+
+
+<table class="table table-striped">
+<thead>
+	<tr>
+		<th>Name</th>
+		<th>Added</th>
+		<th></th>
+	</tr>
+</thead>
+<tbody data-bind="foreach: recipes">
+	<tr>
+		<td><a data-bind="attr: { href: '#recipes/' + id }, text: name"></a></td>
+		<td data-bind="text: added"></td>
+		<td>
+			
+			<button class="btn btn-default" data-bind="click: $parent.brew">Brew!</button>
+		</td>
+	</tr>
+</tbody>
+
+</table>
+
+<button class="btn btn-primary">Add</button>
+
+
+</div>
