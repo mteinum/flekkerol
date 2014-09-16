@@ -2,13 +2,28 @@ define(['toastr'], function(toastr){
 	
 	return new function() {
 		
-		// google channel doc:
-		// https://developers.google.com/appengine/docs/java/channel/?csw=1#Example_Tic_Tac_Toe_Application
-		
 		var self = this;
 		
-//		return $.get('/ws')
-//			.done(function(data){ self.initialize(data); })
-//			.fail(function(err) { toastr.error(err); });
+		var location = 'ws://' + document.location.host + '/temperature';
+		
+        self.socket = new WebSocket(location);
+        
+        self.socket.onmessage = function(evt){
+        	console.info(evt.data, 'websocket');
+        };
+
+        self.socket.onclose = function(){
+        	console.info('closed', 'websocket');
+        };
+        
+        self.socket.onerror = function(evt){
+        	console.log(evt);
+        	toastr.error('onerror', 'websocket');
+        };
+        
+        self.socket.onopen = function(evt){
+        	console.info('websocket connected', 'websocket');
+        	self.socket.send('foo bar');
+        };
 	};
 });
