@@ -12,6 +12,8 @@ public class TemperatureSensorSocket extends WebSocketAdapter {
 	
 	private static final Logger LOGGER = 
             Logger.getLogger(TemperatureSensorSocket.class.getName());
+	
+	private Session _session;
 
 	@Override
 	public void onWebSocketClose(int statusCode, String reason) {
@@ -25,13 +27,9 @@ public class TemperatureSensorSocket extends WebSocketAdapter {
 	public void onWebSocketConnect(Session sess) {
 		super.onWebSocketConnect(sess);
 		
-		LOGGER.info("onWebSocketConnect " + sess);
+		_session = sess;
 		
-		try {
-			sess.getRemote().sendString("Hello WebSocket");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		LOGGER.info("onWebSocketConnect " + sess);
 		
 	}
 
@@ -46,7 +44,16 @@ public class TemperatureSensorSocket extends WebSocketAdapter {
 	public void onWebSocketText(String message) {
 		super.onWebSocketText(message);
 		
-		LOGGER.info("onWebSocketText: " + message);
+		if (message.equals("ping")) {
+		}
+		else{
+			// echo back
+			try {
+				_session.getRemote().sendString(message);
+			} catch (IOException e) {
+				LOGGER.info("failure " + e);
+			}
+		}
 	}
 	
 	

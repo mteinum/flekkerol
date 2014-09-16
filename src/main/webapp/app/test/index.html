@@ -1,0 +1,23 @@
+<div>
+	<h2>Test</h2>
+	
+	<h3>WebSocket</h3>
+
+	<div class="form-group">
+		<label for="text">Text to send</label> <input type="text"
+			class="form-control" id="text" placeholder="Enter text"
+			data-bind="value: text">
+	</div>
+
+	<button class="btn btn-primary" data-bind="click: send">Send</button>
+	
+	
+	<h3>JSON Servlet</h3>
+	
+	<div class="alert alert-success"
+		data-bind="text: message, visible: message"></div>
+
+	<button data-bind="click: getMessage" class="btn btn-primary">Test
+		HttpServlet</button>
+	
+</div>

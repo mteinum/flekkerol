@@ -1,15 +1,18 @@
 package no.teinum.flekkerol;
 
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class HelloServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+@SuppressWarnings("serial")
+public class HelloServlet extends JsonHttpServlet {
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().print("Hello Servlet!");
+	@Override
+	protected JSONObject getRootObject() throws JSONException {
+		
+		JSONObject obj = new JSONObject();
+		
+		obj.put("message", "RDWHAHB");
+		
+		return obj;
 	}
 }

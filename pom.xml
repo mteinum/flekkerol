@@ -48,6 +48,11 @@
 			<artifactId>jetty-webapp</artifactId>
 			<version>${org.eclipse.jetty.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20140107</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>flekkerol</finalName>
