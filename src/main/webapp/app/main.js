@@ -18,9 +18,7 @@ requirejs.config({
     		deps: ['jquery'],
     		exports: 'bootstrap'
     	}
-    },
-    
-    urlArgs: 'v=1'
+    }
 });
 
 define(['durandal/system', 'durandal/app', 'toastr', 'bootstrap'],
