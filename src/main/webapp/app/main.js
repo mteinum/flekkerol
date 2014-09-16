@@ -18,10 +18,13 @@ requirejs.config({
     		deps: ['jquery'],
     		exports: 'bootstrap'
     	}
-    }
+    },
+    
+    urlArgs: 'v=1'
 });
 
-define(['durandal/system', 'durandal/app', 'toastr', 'bootstrap'], function (system, app, toastr) {
+define(['durandal/system', 'durandal/app', 'toastr', 'bootstrap'],
+		function (system, app, toastr) {
 	
    system.debug(true);
    

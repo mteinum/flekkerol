@@ -1,6 +1,7 @@
-define(['plugins/router', 'websocket'], function (router) {
+define(['plugins/router', 'websocket', 'knockout'], function (router, websocket, ko) {
  
   return {
+	 readyState: ko.computed(function(){ return 'ws-readyState-' + websocket.readyState(); }),
      router: router,
      activate: function () {
        router.map([

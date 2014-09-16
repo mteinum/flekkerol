@@ -18,6 +18,11 @@
 					<li data-bind="css: { active: isActive }"><a
 						data-bind="attr: { href: hash }, html: title"></a></li>
 				</ul>
+				
+				<p class="navbar-text">
+					<i class="fa fa-circle" data-bind="css: readyState"></i>
+				</p>
+				
 				<div class="loader pull-right"
 					data-bind="css: { active: router.isNavigating }">
 					<i class="icon-spinner icon-2x icon-spin"></i>
