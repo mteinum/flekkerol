@@ -13,11 +13,8 @@
 <tbody data-bind="foreach: recipes">
 	<tr>
 		<td><a data-bind="attr: { href: '#recipes/' + id }, text: name"></a></td>
-		<td data-bind="text: added"></td>
-		<td>
-			
-			<button class="btn btn-default" data-bind="click: $parent.brew">Brew!</button>
-		</td>
+		<td data-bind="text: $root.moment(added).calendar()"></td>
+		<td><a class="btn btn-default" data-bind="attr: { href: '#brew/' + id }">Brew!</a></td>
 	</tr>
 </tbody>
 

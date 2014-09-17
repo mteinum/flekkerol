@@ -72,16 +72,14 @@ define(function(){
                         ];
 		
 		self.getRecipes = function(){
-			return self.recipes;
+			return $.Deferred().resolve(self.recipes);
 		};
 		
 		self.getRecipe = function(id){
+			
 			var e = self.recipes.filter(function (obj){ return obj.id == id; });
 			
-			if (e.length == 0)
-				return null;
-			
-			return e[0];
+			return $.Deferred().resolve(e.length == 0 ? null : e[0]);
 		};
 		
 	};

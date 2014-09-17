@@ -7,7 +7,8 @@ requirejs.config({
     'knockout': '../lib/knockout/knockout-3.1.0',
     'toastr': '../lib/toastr/toastr.min',
     'jquery': '../lib/jquery/jquery-2.1.1.min',
-    'bootstrap': '../lib/bootstrap/bootstrap.min'
+    'bootstrap': '../lib/bootstrap/bootstrap.min',
+    'moment': '../lib/moment/moment.min'
     },
     
     shim: {
@@ -18,6 +19,12 @@ requirejs.config({
     		deps: ['jquery'],
     		exports: 'bootstrap'
     	}
+    },
+    
+    config: {
+        moment: {
+            noGlobal: true
+        }
     }
 });
 
