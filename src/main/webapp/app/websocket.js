@@ -1,4 +1,4 @@
-define(['toastr', 'knockout'], function(toastr, ko){
+define(['toastr', 'knockout', 'durandal/app'], function(toastr, ko, app){
 	
 	return new function() {
 		
@@ -12,6 +12,13 @@ define(['toastr', 'knockout'], function(toastr, ko){
         
         self.socket.onmessage = function(evt){
         	toastr.info(evt.data, 'websocket');
+        	
+        	// alle meldinger vi får inn på dette grensesnittet er json.
+        	// felles struktur er { type: "", data: "" }
+        	
+        	var obj = JSON.parse(evt.data);
+
+        	app.trigger(obj.type, obj.data);
         };
 
         self.socket.onclose = function(){
@@ -24,9 +31,6 @@ define(['toastr', 'knockout'], function(toastr, ko){
         };
         
         self.socket.onopen = function(evt){
-        	
-        	// self.send("id:1234");
-        	
         	self.readyState(self.socket.readyState);
         	setInterval(function(){
         		self.socket.send('ping');
@@ -35,6 +39,14 @@ define(['toastr', 'knockout'], function(toastr, ko){
         
         self.send = function(msg){
         	self.socket.send(msg);
+        };
+        
+        self.getSensorList = function(){
+        	self.socket.send('sensor-list');
+        };
+        
+        self.subscribe = function(id){
+        	self.socket.send('subscribe:' + id);
         };
 	};
 });

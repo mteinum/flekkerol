@@ -5,8 +5,16 @@ define(['websocket', 'knockout', 'toastr'], function(websocket, ko, toastr){
 		
 		self.text = ko.observable();
 		
-		self.send = function(){
+		self.broadcast = function(){
 			websocket.send(self.text());
+		};
+		
+		self.getSensorList = function(){
+			websocket.getSensorList();
+		};
+		
+		self.closeSensor = function(){
+			self.socket.close();
 		};
 		
 		self.message = ko.observable();

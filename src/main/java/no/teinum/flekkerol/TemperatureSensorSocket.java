@@ -40,7 +40,7 @@ public class TemperatureSensorSocket extends WebSocketAdapter {
 		JSONObject obj = new JSONObject();
 		
 		obj.put("type", "sensor-remove")
-		   .put("sensor-id", getSensorId());
+		   .put("data", getSensorId());
 
 		ClientRegistry.broadcast(obj);
 	}
@@ -62,7 +62,7 @@ public class TemperatureSensorSocket extends WebSocketAdapter {
 		JSONObject obj = new JSONObject();
 		
 		obj.put("type", "sensor-add")
-		   .put("sensor-id", id);
+		   .put("data", id);
 		
 		ClientRegistry.broadcast(obj);
 	}

@@ -15,13 +15,9 @@ public class ClientRegistry {
 		_broadcast.remove(client);
 	}
 	
-	public static void broadcast(String message) {
-		for (TemperatureClientSocket s : _broadcast) {
-			s.send(message);
-		}
-	}
-	
 	public static void broadcast(JSONObject obj){
-		broadcast(obj.toString());
+		for (TemperatureClientSocket s : _broadcast) {
+			s.send(obj);
+		}
 	}
 }
