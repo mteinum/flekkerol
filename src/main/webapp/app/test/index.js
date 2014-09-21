@@ -3,7 +3,7 @@ define(['websocket', 'knockout', 'toastr', 'durandal/app'],
 	
 	return function(){
 		var self = this;
-		
+				
 		self.text = ko.observable();
 		
 		self.broadcast = function(){
@@ -25,10 +25,14 @@ define(['websocket', 'knockout', 'toastr', 'durandal/app'],
 			toastr.info('subscribe to sensor ' + self.subscribeId());
 		};
 		
-		app.on('sensor-add').then(function(data){
+		self.sensorAddSubscription = app.on('sensor-add').then(function(data){
 			self.subscribeId(data);
 			self.subscribe();
 		});
+		
+		self.deactivate = function(){
+			self.sensorAddSubscription.off();
+		};
 		
 		self.message = ko.observable();
 		
