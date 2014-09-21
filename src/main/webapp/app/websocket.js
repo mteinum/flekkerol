@@ -24,6 +24,9 @@ define(['toastr', 'knockout'], function(toastr, ko){
         };
         
         self.socket.onopen = function(evt){
+        	
+        	// self.send("id:1234");
+        	
         	self.readyState(self.socket.readyState);
         	setInterval(function(){
         		self.socket.send('ping');

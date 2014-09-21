@@ -9,6 +9,6 @@ public class TemperatureSensorServlet extends WebSocketServlet {
 	@Override
 	public void configure(WebSocketServletFactory factory) {
 	    factory.getPolicy().setIdleTimeout(1000 * 3600);
-		factory.register(TemperatureSensorSocket.class);
+		factory.setCreator(new TemperatureSensorCreator());
 	}
 }
