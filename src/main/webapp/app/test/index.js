@@ -1,4 +1,5 @@
-define(['websocket', 'knockout', 'toastr'], function(websocket, ko, toastr){
+define(['websocket', 'knockout', 'toastr', 'durandal/app'],
+		function(websocket, ko, toastr, app){
 	
 	return function(){
 		var self = this;
@@ -17,6 +18,18 @@ define(['websocket', 'knockout', 'toastr'], function(websocket, ko, toastr){
 			self.socket.close();
 		};
 		
+		self.subscribeId = ko.observable();
+		
+		self.subscribe = function(){
+			websocket.subscribe(self.subscribeId());
+			toastr.info('subscribe to sensor ' + self.subscribeId());
+		};
+		
+		app.on('sensor-add').then(function(data){
+			self.subscribeId(data);
+			self.subscribe();
+		});
+		
 		self.message = ko.observable();
 		
 		self.getMessage = function(){
@@ -27,6 +40,8 @@ define(['websocket', 'knockout', 'toastr'], function(websocket, ko, toastr){
 			
 		};
 		
+		self.sensorOpen = ko.observable(false);
+		
 		// fire up a socket sensor
 		var location = 'ws://' + document.location.host + '/temperature';
 		
@@ -36,13 +51,28 @@ define(['websocket', 'knockout', 'toastr'], function(websocket, ko, toastr){
         	toastr.error('WS error', 'WebSocket Sensor');
         };
         
+        self.socket.onclose = function(){
+        	self.sensorOpen(false);
+        };
+        
         self.socket.onmessage = function(msg){
         	toastr.info(msg, 'WebSocket Sensor');
         }
         
         self.socket.onopen = function(){
-        	self.socket.send("id:1234");
+        	self.sensorOpen(true);
         };
-
+        
+        self.sensorId = ko.observable();
+        
+        self.initSensor = function(){
+        	self.socket.send('id:' + self.sensorId());
+        };
+        
+        self.temperature = ko.observable();
+        
+        self.sendTemperature = function() {
+        	self.socket.send('temperature:' + self.temperature());
+        };
 	};
 });

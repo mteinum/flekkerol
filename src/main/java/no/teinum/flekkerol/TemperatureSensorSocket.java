@@ -67,17 +67,20 @@ public class TemperatureSensorSocket extends WebSocketAdapter {
 		ClientRegistry.broadcast(obj);
 	}
 	
-	private void sendSensorData(String data){
+	private void sendSensorData(String value){
 		JSONObject obj = new JSONObject();
+		
+		JSONObject data = new JSONObject();
+		data.put("sensor-id", getSensorId());
+		data.put("value", value);
 		
 		obj.put("type", "sensor-data");
 		obj.put("data", data);
 		
 		for (TemperatureClientSocket client : _clients) {
 			try {
-				client.getRemote().sendString(obj.toString());
+				client.send(obj);
 			} catch (IOException e) {
-				LOGGER.info("failure " + e);
 				_clients.remove(client);
 			}
 		}
@@ -85,6 +88,8 @@ public class TemperatureSensorSocket extends WebSocketAdapter {
 
 	@Override
 	public void onWebSocketText(String message) {
+		
+		LOGGER.info(message);
 
 		String[] parts = message.split(":");
 		String command = parts[0];
@@ -95,9 +100,12 @@ public class TemperatureSensorSocket extends WebSocketAdapter {
 		else if (command.equals("id")){
 			registerSensor(parts[1]);
 		}
-		else
+		else if (command.equals("temperature"))
 		{
-			sendSensorData(message);
+			sendSensorData(parts[1]);
+		}
+		else {
+			LOGGER.info("unknown: " + message);
 		}
 	}
 }

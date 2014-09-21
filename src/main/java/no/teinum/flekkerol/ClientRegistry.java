@@ -1,5 +1,6 @@
 package no.teinum.flekkerol;
 
+import java.io.IOException;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.json.JSONObject;
@@ -17,7 +18,11 @@ public class ClientRegistry {
 	
 	public static void broadcast(JSONObject obj){
 		for (TemperatureClientSocket s : _broadcast) {
-			s.send(obj);
+			try {
+				s.send(obj);
+			} catch (IOException e) {
+				// det logges og ryddes opp i s.send
+			}
 		}
 	}
 }

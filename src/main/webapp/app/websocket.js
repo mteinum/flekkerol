@@ -11,13 +11,9 @@ define(['toastr', 'knockout', 'durandal/app'], function(toastr, ko, app){
         self.readyState(self.socket.readyState);
         
         self.socket.onmessage = function(evt){
-        	toastr.info(evt.data, 'websocket');
-        	
-        	// alle meldinger vi får inn på dette grensesnittet er json.
-        	// felles struktur er { type: "", data: "" }
+        	toastr.info(evt.data, 'debug/websocket');
         	
         	var obj = JSON.parse(evt.data);
-
         	app.trigger(obj.type, obj.data);
         };
 

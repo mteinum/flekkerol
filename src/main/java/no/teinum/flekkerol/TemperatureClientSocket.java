@@ -34,17 +34,17 @@ public class TemperatureClientSocket extends WebSocketAdapter {
 		LOGGER.info("onWebSocketError " + cause);
 	}
 
-	private void send(String message) {
+	private void send(String message) throws IOException {
 		LOGGER.info("send " + message);
 		try {
 			_session.getRemote().sendString(message);
 		} catch (IOException e) {
-			LOGGER.info("failure " + e);
 			ClientRegistry.remove(this);
+			throw e;
 		}
 	}
 	
-	public void send(JSONObject root){
+	public void send(JSONObject root) throws IOException {
 		send(root.toString());
 	}
 	
@@ -59,7 +59,10 @@ public class TemperatureClientSocket extends WebSocketAdapter {
         	ids.put(id);
         }
 		
-        send(root);
+        try {
+			send(root);
+		} catch (IOException e) {
+		}
 	}
 	
 	private void sendClientBroadcast(String message){

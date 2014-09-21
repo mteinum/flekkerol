@@ -1,26 +1,73 @@
 <div>
 	<h2>Test</h2>
-	
-	<h3>WebSocket</h3>
+
+
+
+	<h3>WebSocket Sensor</h3>
 
 	<div class="form-group">
-		<label for="text">Text to send</label> <input type="text"
-			class="form-control" id="text" placeholder="Enter text"
-			data-bind="value: text">
+		<label for="text">SensorId</label>
+		<div class="input-group">
+			<input type="text" class="form-control" id="text"
+				placeholder="Enter sensorId" data-bind="value: sensorId"> <span
+				class="input-group-btn">
+				<button class="btn btn-primary"
+					data-bind="click: initSensor, enable: sensorId">init</button>
+			</span>
+		</div>
 	</div>
 
-	<button class="btn btn-primary" data-bind="click: broadcast">broadcast</button>
-	
-	<button class="btn btn-primary" data-bind="click: getSensorList">getSensorList</button>
-	
+	<div class="form-group">
+		<label for="text">Simulate temperature event</label>
+		<div class="input-group">
+			<input type="text" class="form-control" id="text"
+				placeholder="Enter temperature" data-bind="value: temperature">
+			<span class="input-group-btn">
+				<button class="btn btn-primary"
+					data-bind="click: sendTemperature, enable: temperature">send</button>
+			</span>
+		</div>
+	</div>
+
 	<button class="btn btn-primary" data-bind="click: closeSensor">closeSensor</button>
-	
+
+
+	<h3>WebSocket Client</h3>
+
+	<div class="form-group">
+		<label for="text">Send text to all connected clients</label>
+
+		<div class="input-group">
+			<input type="text" class="form-control" id="text"
+				placeholder="Enter text" data-bind="value: text"> <span
+				class="input-group-btn">
+				<button class="btn btn-primary"
+					data-bind="click: broadcast, enable: text">broadcast</button>
+			</span>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="text">Subscribe to sensor</label>
+
+		<div class="input-group">
+			<input type="text" class="form-control" id="text"
+				placeholder="SensorId" data-bind="value: subscribeId"> <span
+				class="input-group-btn">
+				<button class="btn btn-primary"
+					data-bind="click: subscribe, enable: subscribeId">subscribe</button>
+			</span>
+		</div>
+	</div>
+
+
+	<button class="btn btn-primary" data-bind="click: getSensorList">getSensorList</button>
 	<h3>JSON Servlet</h3>
-	
+
 	<div class="alert alert-success"
 		data-bind="text: message, visible: message"></div>
 
 	<button data-bind="click: getMessage" class="btn btn-primary">Test
 		HttpServlet</button>
-	
+
 </div>
