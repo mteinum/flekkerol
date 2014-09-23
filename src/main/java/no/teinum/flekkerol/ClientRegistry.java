@@ -3,6 +3,7 @@ package no.teinum.flekkerol;
 import java.io.IOException;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import org.eclipse.jetty.websocket.api.WebSocketException;
 import org.json.JSONObject;
 
 public class ClientRegistry {
@@ -22,6 +23,8 @@ public class ClientRegistry {
 				s.send(obj);
 			} catch (IOException e) {
 				// det logges og ryddes opp i s.send
+			}
+			catch (WebSocketException e){
 			}
 		}
 	}

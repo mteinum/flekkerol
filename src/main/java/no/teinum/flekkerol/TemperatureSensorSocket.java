@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.WebSocketAdapter;
+import org.eclipse.jetty.websocket.api.WebSocketException;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 import org.json.JSONObject;
 
@@ -79,8 +80,13 @@ public class TemperatureSensorSocket extends WebSocketAdapter {
 		
 		for (TemperatureClientSocket client : _clients) {
 			try {
-				client.send(obj);
+					client.send(obj);
 			} catch (IOException e) {
+				// failed to send data
+				_clients.remove(client);
+			}
+			catch (WebSocketException e){
+				// client disconnected
 				_clients.remove(client);
 			}
 		}

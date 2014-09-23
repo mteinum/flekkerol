@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.WebSocketAdapter;
+import org.eclipse.jetty.websocket.api.WebSocketException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -39,6 +40,10 @@ public class TemperatureClientSocket extends WebSocketAdapter {
 		try {
 			_session.getRemote().sendString(message);
 		} catch (IOException e) {
+			ClientRegistry.remove(this);
+			throw e;
+		}
+		catch (WebSocketException e){
 			ClientRegistry.remove(this);
 			throw e;
 		}
