@@ -30,8 +30,16 @@ define(['websocket', 'knockout', 'toastr', 'durandal/app'],
 			self.subscribe();
 		});
 		
+		self.sensorListSubscription = app.on('sensor-list').then(function(data){
+			$.each(data, function(index, sensorId){
+				self.subscribeId(sensorId);
+				self.subscribe();
+			});
+		});
+		
 		self.deactivate = function(){
 			self.sensorAddSubscription.off();
+			self.sensorListSubscription.off();
 		};
 		
 		self.message = ko.observable();
@@ -78,5 +86,9 @@ define(['websocket', 'knockout', 'toastr', 'durandal/app'],
         self.sendTemperature = function() {
         	self.socket.send('temperature:' + self.temperature());
         };
+        
+        // get list of sensors
+        websocket.getSensorList();
+        
 	};
 });
