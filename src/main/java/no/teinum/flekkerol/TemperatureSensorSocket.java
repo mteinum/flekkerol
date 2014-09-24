@@ -1,6 +1,8 @@
 package no.teinum.flekkerol;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.logging.Logger;
 
@@ -69,11 +71,15 @@ public class TemperatureSensorSocket extends WebSocketAdapter {
 	}
 	
 	private void sendSensorData(String value){
+		
+		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US);
+
 		JSONObject obj = new JSONObject();
 		
 		JSONObject data = new JSONObject();
 		data.put("sensor-id", getSensorId());
 		data.put("value", value);
+		data.put("date", df.format(new java.util.Date()));
 		
 		obj.put("type", "sensor-data");
 		obj.put("data", data);

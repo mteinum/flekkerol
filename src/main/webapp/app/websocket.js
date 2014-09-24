@@ -11,10 +11,12 @@ define(['toastr', 'knockout', 'durandal/app'], function(toastr, ko, app){
         self.readyState(self.socket.readyState);
         
         self.socket.onmessage = function(evt){
-        	toastr.info(evt.data, 'debug/websocket');
         	
         	var obj = JSON.parse(evt.data);
         	app.trigger(obj.type, obj.data);
+
+        	if (obj.type !== 'sensor-data')
+        		toastr.info(evt.data, 'debug/websocket');
         };
 
         self.socket.onclose = function(){

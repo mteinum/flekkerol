@@ -1,5 +1,5 @@
-define(['websocket', 'knockout', 'toastr', 'durandal/app'],
-		function(websocket, ko, toastr, app){
+define(['websocket', 'knockout', 'toastr', 'durandal/app', 'moment'],
+		function(websocket, ko, toastr, app, moment){
 	
 	
 	ko.bindingHandlers.canvas = {
@@ -14,6 +14,7 @@ define(['websocket', 'knockout', 'toastr', 'durandal/app'],
 		var self = this;
 		
 		self.currentTemperature = 0;
+		self.currentTemperatureDate = null;
 		
 		self.drawTemperature = function(ctx, width, height){
 	        var targetTemperature = 63; // grader
@@ -67,10 +68,22 @@ define(['websocket', 'knockout', 'toastr', 'durandal/app'],
 	        function writeZeroLine(){
 	        	ctx.beginPath();
 	        	ctx.moveTo(10, y_zero);
-	        	ctx.lineTo(100, y_zero);
+	        	ctx.lineTo(width - 20, y_zero);
 	        	ctx.strokeStyle = '#aaa';
 	        	ctx.stroke();
 	        }
+	        
+	        function writeTimeStamp(){
+	        	if (self.currentTemperatureDate){
+		        	ctx.strokeStyle = '#aaa';
+		        	ctx.font="10px Helvetica";
+
+		        	var txt = self.currentTemperatureDate;
+
+		        	ctx.fillText(txt, 10, height-5);
+	        		
+	        	}
+	        };
 
 	        function render(){
 	        	ctx.fillStyle = '#000';
@@ -79,6 +92,7 @@ define(['websocket', 'knockout', 'toastr', 'durandal/app'],
 	        	writeMeter();
 	        	writeZeroLine();
 	        	writeTarget();
+	        	writeTimeStamp();
 	        }
 
 	        (function animloop(){
@@ -122,6 +136,7 @@ define(['websocket', 'knockout', 'toastr', 'durandal/app'],
 		
 		self.sensorDataSubscription = app.on('sensor-data').then(function(data){
 			self.currentTemperature = data.value / 1000;
+			self.currentTemperatureDate = moment(data.date).format('HH:mm:ss');
 		});
 		
 		self.deactivate = function(){
